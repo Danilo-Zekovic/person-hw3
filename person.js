@@ -20,6 +20,10 @@ function List() {
   this.dataStore = [];
   this.append = append;
   this.toString = toString;
+  this.getElement = getElement;
+  this.front = front;
+  this.next = next;
+  this.oneGender = oneGender;
 }
 // add a element to the list
 function append(element){
@@ -29,14 +33,36 @@ function append(element){
 function toString() {
   return this.dataStore;
 }
-
-// function to display either gender 
-function oneGender() {
-  
+// getElement, returns element at current position
+function getElement() {
+  return this.dataStore[this.pos];
+}
+// front set pos to first element
+function front() {
+  this.pos = 0;
+}
+// next moves to the next element
+function next() {
+  if (this.pos < this.listSize-1) {
+    ++this.pos;
+  }
 }
 
-
-
+// function to display either gender
+// argument defines which gender will be displayed 
+function oneGender(pickGender) {
+  this.front();                               // set to first e in list
+  for(var i = 0; i<this.listSize; ++i) {      // loop through all e
+    //console.log("start loop" + i);
+    if(this.getElement().gender == pickGender){ //
+      //console.log("foo" + i);
+      console.log(this.getElement().name);      // print e 
+      this.next();                              // go to next e
+    }else{
+      this.next();                              // go to next e
+    } // end else
+  } // end for
+} // end oneGender
 
 // create List of people
 var listPeople = new List();
@@ -67,3 +93,9 @@ listPeople.append(petar);
 
 // display the entire list
 console.log(listPeople.toString());
+
+// run the function to display either gender
+console.log("\n" + "Ladies first" + "\n");
+listPeople.oneGender("Female");
+console.log("\n" + "And now gentlemen" + "\n");
+listPeople.oneGender("Male");
